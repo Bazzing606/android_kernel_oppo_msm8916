@@ -8,12 +8,12 @@ echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
 START=$(date +"%s")
-export CONFIG_PATH=$PWD/arch/arm64/configs/lavender-perf_defconfig
+export CONFIG_PATH=$PWD/arch/arm64/configs/lineage_a37f_defconfig
 PATH="${PWD}/clang/bin:$PATH"
 export LD="clang/bin/ld.lld"
 export ARCH=arm64
-export KBUILD_BUILD_HOST=notkernel
-export KBUILD_BUILD_USER="Yasir"
+export KBUILD_BUILD_HOST=Platinum
+export KBUILD_BUILD_USER="erza@CircleCi"
 # sticker plox
 function sticker() {
     curl -s -X POST "https://api.telegram.org/bot$token/sendSticker" \
