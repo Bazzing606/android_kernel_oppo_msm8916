@@ -11,8 +11,8 @@ jobs:
            git config --global user.email "erzatp720@gmail.com"
            git config --global color.ui false
            git clone https://github.com/akhilnarang/scripts && cd scripts && bash setup/android_build_env.sh && cd ..
-           mkdir Alive-Q
-           cd Alive-Q
+           mkdir notkernel
+           cd notkernel
            wget https://raw.githubusercontent.com/Bazzing606/android_kernel_oppo_msm8916/lineage-17.1/.circleci/build.sh
            source build.sh
 workflows:
