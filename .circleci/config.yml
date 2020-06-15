@@ -1,22 +1,25 @@
 version: 2.1
 jobs:
-  compile:
+  build:
    docker:
-      - image: ubuntu:18.04
-   steps:
+      - image: ghost6482/ubuntu
+   steps:   
       - run:
+          name: Checkout
           command: |
-           apt-get -y update && apt-get -y upgrade && apt-get -y install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex bison
-           git config --global user.name "Bazzing606"
-           git config --global user.email "erzatp720@gmail.com"
-           git config --global color.ui false
-           git clone https://github.com/akhilnarang/scripts && cd scripts && bash setup/android_build_env.sh && cd ..
-           mkdir notkernel
-           cd notkernel
-           wget https://raw.githubusercontent.com/Bazzing606/android_kernel_oppo_msm8916/lineage-17.1/.circleci/build.sh
-           source build.sh
-workflows:
-  version: 2.1
-  cooking:
-    jobs:
-      - compile
+           git clone https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git . --depth=1 --branch=$CIRCLE_BRANCH --recurse-submodules -j$(nproc --all)
+      - run:
+          name: Here we go!
+          command: |
+           export KBUILD_BUILD_USER=ghost6482
+           make marmite_defconfig O=out
+           make -j$(nproc --all) O=out CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
+      - run:
+          name: Pack & Upload
+          command: |
+           export ZIPNAME=positron-P-$(date +%Y%m%d)-marmite.zip
+           git clone https://github.com/ghost6482/AnyKernel3.git --branch=marmite --depth=1
+           cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
+           cd AnyKernel3
+           zip -r9 $ZIPNAME * -x .git README.md *placeholder
+           curl -F chat_id=$CHAT_ID -F document=@$ZIPNAME -F parse_mode=markdown https://api.telegram.org/bot"$BOT_API_TOKEN"/sendDocument
