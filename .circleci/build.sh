@@ -3,7 +3,7 @@
 # Yasir-siddiqui
 # By Yasir-siddiqui
 echo "Cloning dependencies"
-git clone --depth=1 https://github.com/Bazzing606/android_kernel_oppo_msm8916 -b lineage17.1 kernel
+git clone --depth=1 https://github.com/Bazzing606/android_kernel_oppo_msm8916 -b lineage-17.1 kernel
 cd kernel
 git clone --depth=1 https://github.com/crDroidMod/android_prebuilts_clang_host_linux-x86_clang-6032204 clang
 git clone --depth=1 https://github.com/KudProject/arm-linux-androideabi-4.9 gcc32
