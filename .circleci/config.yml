@@ -11,8 +11,8 @@ jobs:
       - run:
           name: Here we go!
           command: |
-           export KBUILD_BUILD_USER=ghost6482
-           make marmite_defconfig O=out
+           export KBUILD_BUILD_USER=erza@circleCI
+           make lineage_a37f_defconfig O=out
            make -j$(nproc --all) O=out CC=clang AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
       - run:
           name: Pack & Upload
